@@ -85,13 +85,15 @@
     <div class="app" v-show="showQuestions">
       <div class="app__header">
         <div class="app__header-inner">
-          <div class="app__count"># 1</div>
-          <div class="app__text">Текст вопроса</div>
+          <div class="app__count"># {{number+1}}</div>
+          <div class="app__text">{{questions[number][0]}}</div>
         </div>
       </div>
       <div class="app__body">
-        <button class="app__btn">
-          <div class="app__btn-text">Ответ 1</div>
+        <button class="app__btn"
+        v-for="(answer, i) in questions[number][1]"
+        @click="nextQuestions(questions[number][2][i])">
+          <div class="app__btn-text">{{answer}}</div>
         </button>
       </div>
     </div>
@@ -152,86 +154,94 @@
   <script src="js/const.js"></script>
   <script>
     let app = new Vue({
-      el: '.main',
-      data: {
-        showMain: true,
-        showSocial: false,
-        showAchivments: false,
-        showQuestions: false,
-        showResults: false,
-        number: 0,
-        score: {
-          'zerg': 0,
-          'primal': 0,
-          'protoss': 0,
-          'taldarim': 0,
-          'terran': 0
-        },
-        totalGame: localStorage.getItem('sc2totalGame') ? JSON.parse(localStorage.getItem('sc2totalGame')) : {
-          'zerg': 0,
-          'primal': 0,
-          'protoss': 0,
-          'taldarim': 0,
-          'terran': 0,
-          'infested': 0,
-          'hybrid': 0
-        },
-        totalGames: localStorage.getItem('sc2totalGames') ? localStorage.getItem('sc2totalGames') : 0,
-        questions: questions,
-        results: results,
-        resltRace: 'infested'
-      },
-      metods: {
-        goToMain() {
-          this.showMain = true
-          this.showSocial = false
-          this.showAchivments = false
-          this.showQuestions = false
-          this.showResults = false
-        },
-        goToSocial() {
-          this.showMain = false
-          this.showSocial = true
-          this.showAchivments = false
-          this.showQuestions = false
-          this.showResults = false
-        },
-        goToAchivments() {
-          if(this.totalGames > 0) {
-            this.showMain = false
-            this.showSocial = false
-            this.showAchivments = true
-            this.showQuestions = false
-            this.showResults = false
-          } else {
-            this.goToQuestions()
-          }
-          
-        },
-        goToQuestions() {
-          this.score = {
-          'zerg': 0,
-          'primal': 0,
-          'protoss': 0,
-          'taldarim': 0,
-          'terran': 0
-          }
-          this.showMain = false
-          this.showSocial = false
-          this.showAchivments = false
-          this.showQuestions = true
-          this.showResults = false
-        },
-        goToResults(race) {
-          this.showMain = false
-          this.showSocial = false
-          this.showAchivments = false
-          this.showQuestions = false
-          this.showResults = true
-          this.resltRace = race
-        }
+  el: '.main',
+  data: {
+    showMain: true,
+    showSocial: false,
+    showAchivments: false,
+    showQuestions: false,
+    showResults: false,
+    number: 0,
+    score: {
+      'zerg': 0,
+      'primal': 0,
+      'protoss': 0,
+      'taldarim': 0,
+      'terran': 0
+    },
+    totalGame: localStorage.getItem('sc2totalGame') ? JSON.parse(localStorage.getItem('sc2totalGame')) : {
+      'zerg': 0,
+      'primal': 0,
+      'protoss': 0,
+      'taldarim': 0,
+      'terran': 0,
+      'infested': 0,
+      'hybrid': 0
+    },
+    totalGames: localStorage.getItem('sc2totalGames') ? localStorage.getItem('sc2totalGames') : 0,
+    questions: questions,
+    results: results,
+    resltRace: 'infested'
+  },
+  methods: {
+    goToMain() {
+      this.showMain = true
+      this.showSocial = false
+      this.showAchivments = false
+      this.showQuestions = false
+      this.showResult = false
+    },
+    goToSocial() {
+      this.showMain = false
+      this.showSocial = true
+      this.showAchivments = false
+      this.showQuestions = false
+      this.showResult = false
+    },
+    goToAchivments() {
+      if(this.totalGames > 0) {
+        this.showMain = false
+        this.showSocial = false
+        this.showAchivments = true
+        this.showQuestions = false
+        this.showResult = false
+      } else {
+        this.goToQuestions()
       }
-    })
+    },
+    goToQuestions() {
+      this.score = {
+        'zerg': 0,
+        'primal': 0,
+        'protoss': 0,
+        'taldarim': 0,
+        'terran': 0,
+      }
+      this.showMain = false
+      this.showSocial = false
+      this.showAchivments = false
+      this.showQuestions = true
+      this.showResult = false
+    },
+    goToResult(race) {
+      this.showMain = false
+      this.showSocial = false
+      this.showAchivments = false
+      this.showQuestions = false
+      this.showResult = true
+      this.resultRace = race
+    },
+    nextQuestions(answer) {
+      if(this.number == 24) {
+        this.number = 0
+        // this.endGame()
+      } else {
+        this.number++
+      }
+      eval(answer)
+    }
+  }
+})
   </script>
 </body>
 </html>
