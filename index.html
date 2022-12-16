@@ -19,15 +19,15 @@
         <img src="img/logo.png" class="app__logo">
       </div>
       <div class="app__body">
-        <button class="app__btn">
+        <button class="app__btn" @click="goToQuestions">
           <i class="fa fa-play-circle-o" aria-hidden="true"></i>
           <div class="app__btn-text">Начать</div>
         </button>
-        <button class="app__btn">
+        <button class="app__btn" @click="goToAchivments">
           <i class="fa fa-trophy" aria-hidden="true"></i>
           <div class="app__btn-text">Достижения</div>
         </button>
-        <button class="app__btn">
+        <button class="app__btn" @click="goToSocial">
           <i class="fa fa-user" aria-hidden="true"></i>
           <div class="app__btn-text">Автор</div>
         </button>
@@ -118,7 +118,7 @@
           <i class="fa fa-youtube-play" aria-hidden="true"></i>
           <div class="app__btn-text">Youtube</div>
         </a>
-        <button class="app__btn btn__back">
+        <button class="app__btn btn__back" @click="goToMain">
           <i class="fa fa-reply" aria-hidden="true"></i>
         </button>
       </div>
@@ -138,7 +138,7 @@
             <p class="results__author">Автор</p>
           </div>
           <div class="">
-            <button class="app__btn btn__back btn__zerg">
+            <button class="app__btn btn__back btn__zerg" @click="goToMain">
               <i class="fa fa-reply" aria-hidden="true"></i>
             </button>
           </div>
@@ -181,6 +181,56 @@
         results: results,
         resltRace: 'infested'
       },
+      metods: {
+        goToMain() {
+          this.showMain = true
+          this.showSocial = false
+          this.showAchivments = false
+          this.showQuestions = false
+          this.showResults = false
+        },
+        goToSocial() {
+          this.showMain = false
+          this.showSocial = true
+          this.showAchivments = false
+          this.showQuestions = false
+          this.showResults = false
+        },
+        goToAchivments() {
+          if(this.totalGames > 0) {
+            this.showMain = false
+            this.showSocial = false
+            this.showAchivments = true
+            this.showQuestions = false
+            this.showResults = false
+          } else {
+            this.goToQuestions()
+          }
+          
+        },
+        goToQuestions() {
+          this.score = {
+          'zerg': 0,
+          'primal': 0,
+          'protoss': 0,
+          'taldarim': 0,
+          'terran': 0
+          }
+          this.showMain = false
+          this.showSocial = false
+          this.showAchivments = false
+          this.showQuestions = true
+          this.showResults = false
+        },
+        goToResults(race) {
+          this.showMain = false
+          this.showSocial = false
+          this.showAchivments = false
+          this.showQuestions = false
+          this.showResults = true
+          this.resltRace = race
+        }
+      }
     })
   </script>
 </body>
