@@ -126,12 +126,12 @@
       </div>
     </div>
 
-    <div class="app results" :data-race="resultRace" v-show="showResults">
+    <div class="app results" :data-race="resultRace" v-show="showResult">
       <div class="app__body">
         <div class="app__results-inner">
           <div class="results__title">{{results[resultRace].name}}</div>
           <div class="result__img">
-            <img :src="'img/+resultRace+_logo.png'">
+            <img :src="'img/+resultRace+'_logo.png">
           </div>
           <div class="results__text-box">
             <p class="results__text">{{results[resultRace].description}}</p>
@@ -160,7 +160,7 @@
     showSocial: false,
     showAchivments: false,
     showQuestions: false,
-    showResults: false,
+    showResult: false,
     number: 0,
     score: {
       'zerg': 0,
@@ -256,7 +256,7 @@
         this.totalGame.primal++;
       }
       // Протос
-      else if(this.score.protoss .this.score.zerg && this.score.protoss > this.score.terran && this.score.taldarim < 5 && Math.abs(this.score.protoss - this.score.zerg) > 3) {
+      else if(this.score.protoss > this.score.zerg && this.score.protoss > this.score.terran && this.score.taldarim < 5 && Math.abs(this.score.protoss - this.score.zerg) > 3) {
         this.goToResult('protoss')
         this.totalGame.protoss++;
       }
