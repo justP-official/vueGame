@@ -14,7 +14,7 @@
   
   <div class="main">
 
-    <!-- <div class="app">
+    <div class="app" v-show="showMain">
       <div class="app__header">
         <img src="img/logo.png" class="app__logo">
       </div>
@@ -36,9 +36,9 @@
           <div class="app__btn-text">Звук</div>
         </button>
       </div>
-    </div> -->
+    </div> 
 
-    <!-- <div class="app achivments">
+    <div class="app achivments" v-show="showAchivments">
       <div class="app__body">
         <div class="app__body-inner">
           <h2 class="app__body-title">
@@ -80,9 +80,9 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
-    <!-- <div class="app">
+    <div class="app" v-show="showQuestions">
       <div class="app__header">
         <div class="app__header-inner">
           <div class="app__count"># 1</div>
@@ -94,9 +94,9 @@
           <div class="app__btn-text">Ответ 1</div>
         </button>
       </div>
-    </div> -->
+    </div>
 
-    <!-- <div class="app">
+    <div class="app" v-show="showSocial">
       <div class="app__body">
         <a href="" class="app__btn" target="_blank">
           <i class="fa fa-instagram" aria-hidden="true"></i>
@@ -122,9 +122,9 @@
           <i class="fa fa-reply" aria-hidden="true"></i>
         </button>
       </div>
-    </div> -->
+    </div>
 
-    <div class="app results" data-race="zerg">
+    <div class="app results" data-race="zerg" v-show="showResults">
       <div class="app__body">
         <div class="app__results-inner">
           <div class="results__title">Зерг</div>
@@ -150,5 +150,38 @@
 
   <script src="js/vue.js"></script>
   <script src="js/const.js"></script>
+  <script>
+    let app = new Vue({
+      el: '.main',
+      data: {
+        showMain: true,
+        showSocial: false,
+        showAchivments: false,
+        showQuestions: false,
+        showResults: false,
+        number: 0,
+        score: {
+          'zerg': 0,
+          'primal': 0,
+          'protoss': 0,
+          'taldarim': 0,
+          'terran': 0
+        },
+        totalGame: localStorage.getItem('sc2totalGame') ? JSON.parse(localStorage.getItem('sc2totalGame')) : {
+          'zerg': 0,
+          'primal': 0,
+          'protoss': 0,
+          'taldarim': 0,
+          'terran': 0,
+          'infested': 0,
+          'hybrid': 0
+        },
+        totalGames: localStorage.getItem('sc2totalGames') ? localStorage.getItem('sc2totalGames') : 0,
+        questions: questions,
+        results: results,
+        resltRace: 'infested'
+      },
+    })
+  </script>
 </body>
 </html>
